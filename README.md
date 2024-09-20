@@ -11,13 +11,14 @@
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Features](#features)
+  - [Screenshots](#screenshots)
+  - [Project Structure](#project-structure)
   - [Installation](#installation)
     - [Prerequisites](#prerequisites)
     - [Setup Instructions](#setup-instructions)
   - [Usage](#usage)
     - [Running the Application](#running-the-application)
-    - [Configuration](#configuration)
-    - [Example](#example)
+    - [Application Workflow](#application-workflow)
   - [Testing](#testing)
   - [Contributing](#contributing)
   - [License](#license)
@@ -27,17 +28,100 @@
 
 ## Introduction
 
-**Portfolio Management with Monte Carlo Simulation** is a comprehensive Python application designed to assist investors and financial analysts in managing and optimizing investment portfolios. By leveraging Monte Carlo simulations, the application provides probabilistic forecasts of portfolio performance under various market conditions, aiding in risk assessment and strategic planning.
+**Portfolio Management with Monte Carlo Simulation** is a comprehensive Python application designed to assist investors and financial analysts in managing and optimizing investment portfolios. By leveraging Monte Carlo simulations and interactive visualizations, the application provides probabilistic forecasts of portfolio performance under various market conditions, aiding in risk assessment and strategic planning.
 
 ---
 
 ## Features
 
-- **Data Acquisition**: Seamless retrieval of historical stock data.
-- **Performance Metrics**: Calculation of expected returns, volatility, and other key financial indicators.
-- **Monte Carlo Simulation**: Execution of extensive simulations to model future portfolio behavior.
-- **Optimization Tools**: Functionality to optimize asset allocation based on desired risk-return profiles.
-- **Visualization**: Generation of detailed plots and charts for insightful analysis.
+- **Interactive User Interface**: Streamlit-based UI with intuitive layout and interactive elements.
+- **Investment Input Options**:
+  - Input weights with an initial investment amount.
+  - **OR** specify the actual dollar amount for each stock.
+- **Editable Weights Table**: Adjust weights for each stock directly in an interactive table.
+- **Portfolio Optimization**: Choose to optimize the portfolio to maximize Sharpe Ratio or achieve a balanced portfolio.
+- **Monte Carlo Simulation**: Execute extensive simulations to model future portfolio behavior.
+- **Interactive Plots**: Dynamic, interactive charts using Plotly for enhanced data exploration.
+- **Performance Metrics**: Calculation of expected returns, volatility, Value at Risk (VaR), and other key financial indicators.
+- **Ticker Suggestions**: Autocomplete feature for selecting stock tickers.
+- **Explanatory Tooltips**: Hover over info icons to get explanations of input fields.
+
+---
+
+## Screenshots
+
+*Note: Include screenshots in the `screenshots/` directory and update the image paths below.*
+
+1. **Main Interface with Ticker Selection**
+
+   ![Ticker Selection](screenshots/ticker_selection.png)
+
+   *Description*: The main interface showing the ticker selection with autocomplete suggestions.
+
+2. **Investment Preferences**
+
+   ![Investment Preferences](screenshots/investment_preferences.png)
+
+   *Description*: Users can choose between entering weights with initial investment or specifying dollar amounts per stock.
+
+3. **Editable Weights Table**
+
+   ![Editable Weights Table](screenshots/weights_table.png)
+
+   *Description*: An interactive table where users can input and adjust weights for each stock. The default weights are equal.
+
+4. **Simulation Parameters**
+
+   ![Simulation Parameters](screenshots/simulation_parameters.png)
+
+   *Description*: Set the number of simulations, time horizon, and risk-free rate.
+
+5. **Simulation Results**
+
+   ![Simulation Results](screenshots/simulation_results.png)
+
+   *Description*: The application displays simulation insights and interactive plots after running the Monte Carlo simulation.
+
+6. **Interactive Plots**
+
+   ![Interactive Plots](screenshots/interactive_plots.png)
+
+   *Description*: Interactive charts showing cumulative returns and distribution of final portfolio values.
+
+---
+
+## Project Structure
+
+```
+portfolio_management/
+├── README.md
+├── requirements.txt
+├── setup.py
+├── .gitignore
+├── LICENSE
+├── app.py                    # Streamlit application
+├── portfolio_management/
+│   ├── __init__.py
+│   ├── data/
+│   │   ├── __init__.py
+│   │   └── data_loader.py
+│   ├── monte_carlo/
+│   │   ├── __init__.py
+│   │   └── simulation.py
+│   ├── portfolio/
+│   │   ├── __init__.py
+│   │   ├── portfolio.py
+│   │   └── optimizer.py
+│   └── utils/
+│       ├── __init__.py
+│       └── helpers.py
+└── tests/
+    ├── __init__.py
+    ├── test_data_loader.py
+    ├── test_portfolio.py
+    ├── test_simulation.py
+    └── test_optimizer.py
+```
 
 ---
 
@@ -95,34 +179,54 @@
 
 ### Running the Application
 
-Execute the main script to start the application:
+Run the Streamlit app from the terminal:
 
 ```bash
-python -m portfolio_management.main
+streamlit run app.py
 ```
 
-### Configuration
+This will launch the application in your default web browser.
 
-Customize the application by modifying parameters in `main.py`:
+### Application Workflow
 
-- **Tickers**: Adjust the list of stock symbols to analyze.
-- **Date Range**: Set the `start_date` and `end_date` for historical data retrieval.
-- **Simulation Parameters**: Change `num_simulations` and `time_horizon` for Monte Carlo simulations.
+1. **Select Stocks and Date Range**:
 
-### Example
+   - Use the **Select Stock Tickers** field to search and add stock tickers.
+   - Start typing a ticker symbol, and suggestions will appear.
+   - Select tickers to add them to your portfolio.
+   - Choose the start and end dates for historical data.
 
-```python
-def main():
-    # Load data
-    data_loader = DataLoader()
-    stock_data = data_loader.load_data(
-        tickers=['AAPL', 'MSFT', 'GOOG', 'AMZN'],
-        start_date='2019-01-01',
-        end_date='2023-01-01'
-    )
+2. **Investment Preferences**:
 
-    # Rest of the code remains the same
-```
+   - **Investment Input Option**: Choose between:
+     - **Use Weights and Initial Investment**
+     - **Use Dollar Amounts per Stock**
+   - Depending on your choice:
+     - **Weights and Initial Investment**:
+       - **Editable Weights Table**: Adjust weights for each stock in the interactive table.
+         - The default weights are equal.
+         - Ensure that the total weights sum up to 1.0.
+       - **Optimize Portfolio**: Optionally, choose to optimize the portfolio.
+         - **Optimization Strategy**: Select between maximizing the Sharpe Ratio or a balanced portfolio.
+       - **Initial Investment**: Enter the total amount to invest.
+     - **Dollar Amounts per Stock**:
+       - Input the dollar amount you wish to invest in each stock.
+       - The application calculates the weights based on these amounts.
+
+3. **Simulation Parameters**:
+
+   - Set the number of simulations.
+   - Set the time horizon in days.
+   - Adjust the risk-free rate if necessary.
+
+4. **Run Simulation**:
+
+   - Click on the **"Run Monte Carlo Simulation"** button.
+
+5. **View Results**:
+
+   - **Simulation Insights**: Key metrics from the Monte Carlo simulation.
+   - **Interactive Plots**: Explore the cumulative returns and distribution of final portfolio values using interactive charts.
 
 ---
 
