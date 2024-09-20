@@ -55,6 +55,5 @@ tornado==6.4.1
 typing_extensions==4.12.2
 tzdata==2024.1
 urllib3==2.2.3
-watchdog==5.0.2
 webencodings==0.5.1
 yfinance==0.2.43
