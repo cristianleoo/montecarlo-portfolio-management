@@ -17,7 +17,9 @@ class MonteCarloSimulation:
         final_portfolio_values = np.zeros(num_simulations)
 
         for sim in range(num_simulations):
-            simulated_returns = np.random.multivariate_normal(self.mean, self.covariance, time_horizon)
+            simulated_returns = np.random.multivariate_normal(
+                self.mean, self.covariance, time_horizon
+            )
             cumulative_returns = np.cumprod(1 + simulated_returns, axis=0)
             portfolio_cumulative_returns = cumulative_returns.dot(self.weights)
             all_cumulative_returns[:, sim] = portfolio_cumulative_returns * self.initial_investment
