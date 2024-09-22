@@ -50,8 +50,6 @@
 
 ## Screenshots
 
-*Note: Include screenshots in the `screenshots/` directory and update the image paths below.*
-
 1. **Main Interface with Ticker Selection**
 
    ![Ticker Selection](screenshots/ticker_selection.png)
